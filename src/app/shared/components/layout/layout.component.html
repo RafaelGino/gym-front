@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <div class="navbar-left">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav class="sidenav" fixedInViewport="true" [attr.role]="'navigation'" [mode]="'over'"
+    [opened]="panelOpenState">
+    <div class="side">
+      <div class="side-content">
+        <mat-nav-list>
+          <a class="item-menu item-hover" mat-list-item [routerLink]="['/customer']">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+          </a>
+          <a class="item-menu item-hover" mat-list-item [routerLink]="['/customer']" (click)="sidenav.toggle()">
+            <i class="far fa-calendar-alt"></i>
+            <span class=" sub-item-menu">Listagem de Alunos</span>
+          </a>
+        </mat-nav-list>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

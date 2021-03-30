@@ -1,0 +1,28 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <span>Filtros</span>
+  </mat-expansion-panel-header>
+  <ng-container class="containerFiltros">
+    <mat-grid-list cols="3" rowHeight="50px">
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input type="text" placeholder="Nome" aria-label="Number" matInput>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1">
+        <mat-form-field appearance="outline">
+          <mat-label>Ativo</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1">
+          <button mat-raised-button color="primary">Primary</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </ng-container>
+</mat-expansion-panel>
