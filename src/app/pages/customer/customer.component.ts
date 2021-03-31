@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Customer } from 'src/app/models/customer';
+import { CustomerFilterModel } from 'src/app/models/filters/customer-filter-model';
 import { CustomerService } from 'src/app/services/customer/customer.service';
 import { CustomPaginator } from 'src/app/shared/models/custom-paginator';
 import { UtilService } from 'src/app/shared/services/util.service';
@@ -15,6 +16,8 @@ import { UtilService } from 'src/app/shared/services/util.service';
 export class CustomerComponent implements OnInit {
   dataSource: MatTableDataSource<Customer>;
   customers: Array<Customer>;
+  filterModel: CustomerFilterModel;
+  totalCustomers = 0;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   desserts: Dessert[] = [
@@ -25,6 +28,7 @@ export class CustomerComponent implements OnInit {
     { name: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 4 },
   ];
 
+  displayedColumns: Array<string> = []//['id']
   sortedData: Dessert[];
   constructor(
     private utilService: UtilService,
@@ -37,6 +41,13 @@ export class CustomerComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Customer>(this.customers);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl = this.customPaginator;
+
+
+    this.paginator.pageIndex = 0;
+    this.getCustomers();
+  }
+
+  ngAfterViewInit() {
   }
 
   sortData(sort: Sort) {
@@ -59,8 +70,18 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  private getCustomers() {
-    // return this.customerService.getAllCustomers()
+  private async getCustomers(resetPage: boolean = true) {
+    if (resetPage)
+      this.paginator.pageIndex = 0;
+
+    const data = await this.customerService.getAllCustomers(this.filterModel, this.paginator.pageIndex, this.paginator.pageSize);
+    this.customers = data.result.items.map(e => { return e as Customer });
+    this.dataSource = new MatTableDataSource<Customer>(this.customers);
+    //this.totalCustomers = this.dataSource.result.total;
+  }
+
+  public changePage(event: PageEvent) {
+    this.getCustomers(false);
   }
 }
 

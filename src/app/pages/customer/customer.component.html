@@ -1,6 +1,6 @@
-<mat-expansion-panel>
+<!-- <mat-expansion-panel>
   <mat-expansion-panel-header>
-    <!-- <span>Filtros</span> -->
+
   </mat-expansion-panel-header>
   <ng-container class="containerFiltros">
     <mat-grid-list cols="3" rowHeight="50px">
@@ -14,9 +14,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Ativo</mat-label>
           <mat-select>
-            <mat-option *ngFor="let food of foods" [value]="food.value">
-              {{food.viewValue}}
-            </mat-option>
+
           </mat-select>
         </mat-form-field>
       </mat-grid-tile>
@@ -25,21 +23,18 @@
       </mat-grid-tile>
     </mat-grid-list>
   </ng-container>
-</mat-expansion-panel>
-<table matSort (matSortChange)="sortData($event)">
-  <tr>
-    <th mat-sort-header="name">Dessert (100g)</th>
-    <th mat-sort-header="calories">Calories</th>
-    <th mat-sort-header="fat">Fat (g)</th>
-    <th mat-sort-header="carbs">Carbs (g)</th>
-    <th mat-sort-header="protein">Protein (g)</th>
-  </tr>
+</mat-expansion-panel> -->
+<table mat-table [dataSource]="dataSource">
+  <!-- <ng-container matColumnDef="Id">
+    <th  mat-header-cell *matHeaderCellDef> Codigo gerado </th>
+    <td  mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container> -->
 
-  <tr *ngFor="let dessert of sortedData">
-    <td>{{dessert.name}}</td>
-    <td>{{dessert.calories}}</td>
-    <td>{{dessert.fat}}</td>
-    <td>{{dessert.carbs}}</td>
-    <td>{{dessert.protein}}</td>
-  </tr>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  <!-- (click)="selectRow(row,columns)">
+  </tr> -->
 </table>
+<mat-paginator [length]="totalCustomers" (page)="changePage($event)" [pageSize]="20" [pageSizeOptions]="[10, 20, 50]"
+  showFirstLastButtons></mat-paginator>

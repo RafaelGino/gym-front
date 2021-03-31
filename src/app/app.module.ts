@@ -48,6 +48,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
+import { CustomPaginator } from './shared/models/custom-paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +60,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
 
 
     A11yModule,
@@ -105,7 +108,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     PortalModule,
     ScrollingModule
   ],
-  providers: [],
+  providers: [HttpClientModule, CustomPaginator],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
