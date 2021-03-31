@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Customer } from 'src/app/models/customer';
+import { CustomerService } from 'src/app/services/customer/customer.service';
+import { CustomPaginator } from 'src/app/shared/models/custom-paginator';
 import { UtilService } from 'src/app/shared/services/util.service';
 
 @Component({
@@ -8,26 +13,30 @@ import { UtilService } from 'src/app/shared/services/util.service';
   styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent implements OnInit {
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Ativo'},
-    {value: 'pizza-1', viewValue: 'Inativo'},
-
-  ];
+  dataSource: MatTableDataSource<Customer>;
+  customers: Array<Customer>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   desserts: Dessert[] = [
-    {name: 'Frozen yogurt', calories: 159, fat: 6, carbs: 24, protein: 4},
-    {name: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4},
-    {name: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6},
-    {name: 'Cupcake', calories: 305, fat: 4, carbs: 67, protein: 4},
-    {name: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 4},
+    { name: 'Frozen yogurt', calories: 159, fat: 6, carbs: 24, protein: 4 },
+    { name: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4 },
+    { name: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6 },
+    { name: 'Cupcake', calories: 305, fat: 4, carbs: 67, protein: 4 },
+    { name: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 4 },
   ];
 
   sortedData: Dessert[];
-  constructor(private utilService: UtilService) {
+  constructor(
+    private utilService: UtilService,
+    private customerService: CustomerService,
+    private customPaginator: CustomPaginator,) {
     this.sortedData = this.desserts.slice();
   }
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource<Customer>(this.customers);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl = this.customPaginator;
   }
 
   sortData(sort: Sort) {
@@ -49,14 +58,12 @@ export class CustomerComponent implements OnInit {
       }
     });
   }
+
+  private getCustomers() {
+    // return this.customerService.getAllCustomers()
+  }
 }
 
-
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
 export interface Dessert {
   calories: number;
   carbs: number;
