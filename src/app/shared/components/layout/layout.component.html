@@ -11,12 +11,10 @@
     <div class="side">
       <div class="side-content">
         <mat-nav-list>
-          <a class="item-menu item-hover" mat-list-item [routerLink]="['/customer']">
-            <i class="fas fa-home"></i>
-            <span>Inicio</span>
-          </a>
+          <div class="main-icon">
+            <img src="../../../../assets/sport.svg" class="sport-svg">
+          </div>
           <a class="item-menu item-hover" mat-list-item [routerLink]="['/customer']" (click)="sidenav.toggle()">
-            <i class="far fa-calendar-alt"></i>
             <span class=" sub-item-menu">Listagem de Alunos</span>
           </a>
         </mat-nav-list>
