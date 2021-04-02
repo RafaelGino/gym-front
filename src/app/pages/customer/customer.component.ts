@@ -47,11 +47,13 @@ export class CustomerComponent implements OnInit {
     if (resetPage)
       this.paginator.pageIndex = 0;
 
+    if (!this.paginator.pageSize)
+      this.paginator.pageSize = 10
     const returnedPromise = await this.customerService.getAllCustomers(this.filterModel, this.paginator.pageIndex, this.paginator.pageSize);
     this.customers = returnedPromise.data.items.map(e => { return e as Customer });
     this.dataSource = new MatTableDataSource<Customer>(this.customers);
-    console.log(this.customers)
-    this.totalCustomers = this.dataSource.data.length;
+    console.log(this.dataSource)
+    this.totalCustomers = returnedPromise.data.total;
   }
 
   public changePage() {

@@ -11,6 +11,7 @@ export class CustomPaginator extends MatPaginatorIntl {
 
 
     getRangeLabel = (page: number, pageSize: number, length: number) => {
+
         return ((page * pageSize) + pageSize ) < length ?
                     ((page * pageSize) + 1) + ' - ' + ((page * pageSize) + pageSize) + ' de ' + length :
                     ((page * pageSize) + 1) + ' - ' + (length) + ' de ' + length;
