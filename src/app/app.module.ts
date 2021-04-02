@@ -50,12 +50,15 @@ import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomPaginator } from './shared/models/custom-paginator';
+import { RegisterCustomerComponent } from './pages/customer/register/register-customer/register-customer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     CustomerComponent,
-    LayoutComponent
-  ],
+    LayoutComponent,
+    RegisterCustomerComponent,
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
