@@ -25,16 +25,46 @@
   </ng-container>
 </mat-expansion-panel> -->
 <table mat-table [dataSource]="dataSource">
-  <!-- <ng-container matColumnDef="Id">
-    <th  mat-header-cell *matHeaderCellDef> Codigo gerado </th>
-    <td  mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container> -->
-
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let element">
+      <div>
+        <p class="displayed-name">
+          {{element.firstName}} {{element.lastName}}
+        </p>
+        <mat-chip-list aria-label="Situação">
+          <mat-chip *ngIf="element.active" class="chip active-chip" selected>Ativo</mat-chip>
+          <mat-chip *ngIf="!element.active" class="chip inactive-chip" selected>Inativo</mat-chip>
+        </mat-chip-list>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="contato">
+    <th mat-header-cell *matHeaderCellDef> Contato </th>
+    <td mat-cell *matCellDef="let element">
+      <div class="contact">
+        <p class="email">
+          {{element.email}}
+        </p>
+        <p class="phone">
+          {{element.primaryPhone}}
+        </p>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="idade">
+    <th mat-header-cell *matHeaderCellDef> Idade </th>
+    <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+  </ng-container>
+  <ng-container matColumnDef="modalidade">
+    <th mat-header-cell *matHeaderCellDef> Matrícula </th>
+    <td mat-cell *matCellDef="let element"> {{element.classes[0].name}} </td>
+  </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  <tr class="table-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   <!-- (click)="selectRow(row,columns)">
   </tr> -->
 </table>
-<mat-paginator [length]="totalCustomers" (page)="changePage($event)" [pageSize]="20" [pageSizeOptions]="[10, 20, 50]"
+<mat-paginator [length]="totalCustomers" (page)="changePage()" [pageSize]="20" [pageSizeOptions]="[10, 20, 50]"
   showFirstLastButtons></mat-paginator>

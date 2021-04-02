@@ -15,13 +15,11 @@ export class CustomerService extends BaseRequestService {
   }
 
   public getAllCustomers(filterModel: CustomerFilterModel, pageIndex :number, pageSize :number): Promise<any>{
-    debugger
     const request = <GridSearchModel>{
       page: pageIndex,
       pageSize : pageSize,
       search: filterModel
     }
-
     return this.post(this.routeBase + '/all', request)
   }
 }

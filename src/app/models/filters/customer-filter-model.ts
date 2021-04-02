@@ -1,7 +1,7 @@
 
 export class CustomerFilterModel {
-  id: number;
-  createdDate: string;
+  // id: number;
+  // createdDate: string;
   firstName: string;
   // middleName: string;
   // lastName: string;

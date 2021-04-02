@@ -20,75 +20,41 @@ export class CustomerComponent implements OnInit {
   totalCustomers = 0;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  desserts: Dessert[] = [
-    { name: 'Frozen yogurt', calories: 159, fat: 6, carbs: 24, protein: 4 },
-    { name: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4 },
-    { name: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6 },
-    { name: 'Cupcake', calories: 305, fat: 4, carbs: 67, protein: 4 },
-    { name: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 4 },
-  ];
+  displayedColumns: Array<string> = ['nome', 'contato', 'idade', 'modalidade']
 
-  displayedColumns: Array<string> = []//['id']
-  sortedData: Dessert[];
   constructor(
     private utilService: UtilService,
     private customerService: CustomerService,
     private customPaginator: CustomPaginator,) {
-    this.sortedData = this.desserts.slice();
+    this.filterModel = {
+      firstName: ''
+    }
   }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Customer>(this.customers);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl = this.customPaginator;
-
-
     this.paginator.pageIndex = 0;
     this.getCustomers();
   }
 
   ngAfterViewInit() {
-  }
 
-  sortData(sort: Sort) {
-    const data = this.desserts.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
-      return;
-    }
-
-    this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'name': return this.utilService.compare(a.name, b.name, isAsc);
-        case 'calories': return this.utilService.compare(a.calories, b.calories, isAsc);
-        case 'fat': return this.utilService.compare(a.fat, b.fat, isAsc);
-        case 'carbs': return this.utilService.compare(a.carbs, b.carbs, isAsc);
-        case 'protein': return this.utilService.compare(a.protein, b.protein, isAsc);
-        default: return 0;
-      }
-    });
   }
 
   private async getCustomers(resetPage: boolean = true) {
     if (resetPage)
       this.paginator.pageIndex = 0;
 
-    const data = await this.customerService.getAllCustomers(this.filterModel, this.paginator.pageIndex, this.paginator.pageSize);
-    this.customers = data.result.items.map(e => { return e as Customer });
+    const returnedPromise = await this.customerService.getAllCustomers(this.filterModel, this.paginator.pageIndex, this.paginator.pageSize);
+    this.customers = returnedPromise.data.items.map(e => { return e as Customer });
     this.dataSource = new MatTableDataSource<Customer>(this.customers);
-    //this.totalCustomers = this.dataSource.result.total;
+    console.log(this.customers)
+    this.totalCustomers = this.dataSource.data.length;
   }
 
-  public changePage(event: PageEvent) {
+  public changePage() {
     this.getCustomers(false);
   }
-}
-
-export interface Dessert {
-  calories: number;
-  carbs: number;
-  fat: number;
-  name: string;
-  protein: number;
 }

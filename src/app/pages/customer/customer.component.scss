@@ -1,21 +1,54 @@
 /** forms fields***/
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 ::ng-deep .mat-grid-tile .mat-figure {
-    padding-left: 8px !important;
-    align-items: unset !important;
+  padding-left: 8px !important;
+  align-items: unset !important;
 }
 
-::ng-deep .mat-form-field-flex>.mat-form-field-infix {
-    padding: 0.4em 0px !important;
-    margin-top: 5px !important;
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+  margin-top: 5px !important;
 }
 
 ::ng-deep .mat-form-field-label-wrapper {
-    top: -1.5em;
+  top: -1.5em;
 }
 
+table {
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+}
 
+td {
+  padding: 1px 2px 1px 2px !important;
+  max-width: none !important;
+}
+
+th {
+  padding: 1px 3px 1px 3px !important;
+}
+
+.active-chip {
+  background-color: green !important;
+  min-height: 20px;
+  padding: 7px 5px;
+}
+
+.inactive-chip {
+  background-color: red !important;
+  min-height: 20px;
+  padding: 7px 5px;
+}
+.displayed-name {
+  margin: 0px;
+}
+.contact {
+  > p {
+    margin: 0px;
+  }
+}
